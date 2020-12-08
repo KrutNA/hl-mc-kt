@@ -7,7 +7,7 @@ My other project, [kt-cmd](https://github.com/willemml/kt-cmd) is used for the m
 
 ### Building:
 Clone the repo and enter its directory:
- - `git clone https://github.com/willemml/hl-kt-mc`
+ - `git clone https://github.com/willemml/hl-mc-kt`
  - `cd hl-mc-kt`
 
 Update the submodules:
