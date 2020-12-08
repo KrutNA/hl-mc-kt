@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.4.21"
     application
-    kotlin("plugin.serialization") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.21"
 }
 group = "net.willemml"
-version = "0.0.1"
+version = "0.5.0"
 
 repositories {
     mavenCentral()
@@ -30,8 +30,8 @@ dependencies {
     implementation("com.github.Steveice10:MCProtocolLib:976c2d0f89")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
     implementation("net.daporkchop.lib:minecraft-text:0.5.5-20201106.114836-37")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0-RC2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 }
 
 val run: JavaExec by tasks.getting(JavaExec::class) {
