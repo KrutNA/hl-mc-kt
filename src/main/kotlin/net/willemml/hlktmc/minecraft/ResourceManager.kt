@@ -34,30 +34,28 @@ object ResourceManager {
     var items = HashMap<Int, Item>()
     var materials = HashMap<String, Material>()
 
+    fun readJsonStringFromResource(path: String)
+	= classLoader.getResourceAsStream(path) ?.let { it.bufferedReader().use { it.readText() } }
+    
     fun loadPaths() {
-        val pathFile = File(classLoader.getResource("minecraft-data/data/dataPaths.json")?.file ?: return)
-        dataPaths = json.decodeFromString(pathFile.readText())
+        dataPaths = readJsonStringFromResource("minecraft-data/data/dataPaths.json") ?.let { json.decodeFromString(it) } ?: return
     }
 
     fun loadBlocks() {
         val blocksPath = dataPaths["pc"]?.get(MinecraftConstants.GAME_VERSION)?.get("blocks") ?: return
-        val blocksFile = File(classLoader.getResource("minecraft-data/data/$blocksPath/blocks.json")?.file ?: return)
-        val blocksArray = json.decodeFromString<Array<Block>>(blocksFile.readText())
+        val blocksArray = readJsonStringFromResource("minecraft-data/data/$blocksPath/blocks.json") ?.let { json.decodeFromString<Array<Block>>(it) } ?: return
         for (block in blocksArray) blocks[block.id] = block
         if (!blocks.containsKey(0)) blocks[0] = AIR_BLOCK
     }
 
     fun loadItems() {
         val itemsPath = dataPaths["pc"]?.get(MinecraftConstants.GAME_VERSION)?.get("items") ?: return
-        val itemsFile = File(classLoader.getResource("minecraft-data/data/$itemsPath/items.json")?.file ?: return)
-        val itemsArray = json.decodeFromString<Array<Item>>(itemsFile.readText())
+        val itemsArray = readJsonStringFromResource("minecraft-data/data/$itemsPath/items.json") ?.let { json.decodeFromString<Array<Item>>(it) } ?: return
         for (item in itemsArray) items[item.id] = item
     }
 
     fun loadMaterials() {
         val materialsPath = dataPaths["pc"]?.get(MinecraftConstants.GAME_VERSION)?.get("materials") ?: return
-        val materialsFile =
-            File(classLoader.getResource("minecraft-data/data/$materialsPath/materials.json")?.file ?: return)
-        materials = json.decodeFromString(materialsFile.readText())
+        materials = readJsonStringFromResource("minecraft-data/data/$materialsPath/materials.json") ?.let { json.decodeFromString(it) } ?: return
     }
 }

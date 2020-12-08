@@ -45,3 +45,20 @@ tasks.withType<KotlinCompile> {
 application {
     mainClassName = "MainKt"
 }
+
+val jar by tasks.getting(Jar::class) {
+    manifest.attributes["Main-Class"] = "MainKt"
+}
+
+val fatJar = task("fatJar", type = Jar::class) {
+    archiveBaseName.set("${project.name}-fat")
+    manifest.attributes["Main-Class"] = "MainKt"
+    from(configurations.runtimeClasspath.get().map({ if (it.isDirectory) it else zipTree(it) }))
+    with(tasks.jar.get() as CopySpec)
+}
+
+tasks {
+    "build" {
+        dependsOn(fatJar)
+    }
+}
